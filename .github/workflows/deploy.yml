@@ -1,0 +1,24 @@
+name: 自動部署到 Ubuntu 伺服器
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 取得原始碼
+      uses: actions/checkout@v3
+
+    - name: SSH 登入並部署
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.172.19.128.29 }}
+        username: ${{ secrets.sierra05052025 }}
+        key: ${{ secrets.git@github.com:sierra05052025/Test.git }}
+        script: |
+          cd /var/www/html
+          git pull
+
